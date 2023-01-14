@@ -1,2 +1,2 @@
-export const pythonPath = './py/';
+export const pythonPath = './dist/py/';
 

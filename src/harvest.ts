@@ -1,17 +1,21 @@
 import { pythonPath } from './constants';
-const spawn = require('child_process').spawn;
-const path = require('path');
+import path from 'path';
+import { spawn } from 'child_process'
+// const spawn = require('child_process').spawn;
+// const path = require('path');
 
 // default 13-plot harvest
 export function harvest() {
   console.log('calling harvest')
   // call the python file
-  const python = spawn('python', ['test.py']); // path to python dir somewhere...
+  const py = spawn('python', [path.join(pythonPath, 'harvest.py')]); 
   
 
-  python.stdout.on('data', (data) => {
-    console.log('from stdout:  ', data)
+  py.stdout.on('data', (data) => {
+    console.log('from stdout:  ', data.toString())
   });
 
-  python.on('close', (shit) => console.log('shit?', shit))
+  py.stderr.on('data', error => console.log('an error', error.toString()))
+
+  py.on('close', (shit) => console.log('shit?', shit))
 }
